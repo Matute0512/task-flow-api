@@ -1,0 +1,30 @@
+# Entorno virtual
+venv/
+env/
+
+# Variables de entorno
+.env
+
+# Base de datos
+*.db
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Migraciones (opcional, si no quieres versionarlas)
+# alembic/versions/
+
+# Graphify
+graphify-out/
