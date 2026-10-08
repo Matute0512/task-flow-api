@@ -1,5 +1,6 @@
+from collections.abc import Generator
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
 
 from app.core.config import settings
 
@@ -7,8 +8,10 @@ from app.core.config import settings
 engine = create_engine(
     settings.DATABASE_URL,
     connect_args={
-        "check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {},
+        "check_same_thread": False
+    } if "sqlite" in settings.DATABASE_URL else {},
     echo=settings.DEBUG,  # Muestra queries SQL en desarrollo
+    pool_pre_ping=True,
 )
 
 # Crear la sesión
@@ -21,13 +24,16 @@ class Base(DeclarativeBase):
 
 
 # Dependencia para obtener la sesión de BD
-def get_db():
+def get_db() -> Generator[Session, None, None]:
     """
-    Generador que proporciona una sesión de base de datos.
+    Generador que proporciona una sesión de base de datos con rollback automático.
     Se usa como dependencia en FastAPI para inyectar la BD en los endpoints.
     """
     db = SessionLocal()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()

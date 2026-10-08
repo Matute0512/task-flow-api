@@ -1,8 +1,14 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String, Boolean, DateTime, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.session import Base
+
+if TYPE_CHECKING:
+    from app.models.category import Category
+    from app.models.user import User
 
 
 class Task(Base):
@@ -26,9 +32,10 @@ class Task(Base):
     )
 
     # Relaciones
-    owner_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"))
-    owner: Mapped["User"] = relationship("User", back_populates="tasks")
+    owner_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL")
+    )
+    owner: Mapped["User | None"] = relationship("User", back_populates="tasks")
     category_id: Mapped[int | None] = mapped_column(
         ForeignKey("categories.id", ondelete="SET NULL")
     )
