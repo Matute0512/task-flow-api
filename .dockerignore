@@ -1,0 +1,38 @@
+# Entornos y artefactos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+.env.local
+taskflow.DEBUG
+*.db
+*.sqlite
+*.sqlite3
+
+# Pruebas y análisis de código
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+.mypy_cache/
+graphify-out/
+tests/
+
+# Entornos de desarrollo e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Control de versiones
+.git/
+.gitignore
+.gitattributes
+
+# Documentación (no requerida en tiempo de ejecución de la imagen)
+docs/
+README.md

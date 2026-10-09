@@ -4,7 +4,7 @@ from sqlalchemy import select
 
 from app.main import app
 from app.database.session import SessionLocal
-from app.models import Category, Task, User
+from app.models import Task, User
 
 
 @pytest.fixture(scope="module")
